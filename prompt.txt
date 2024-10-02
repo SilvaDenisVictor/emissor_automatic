@@ -1,0 +1,36 @@
+[Conteudo]
+- Sera enviado um pdf, nesse arquivo estao escritos dados de uma nota fiscal.
+
+[Objetivo]
+- Seu trabalho é extrair CORRETAMENTE  as colunas descricao, unidade, quantidade, valor unitario, total.
+- NAO DEIXE FALTAR NENHUMA LINHA
+- O ARQUIVO ENVIADO ESTA ORGANIZADO EM FORMATO DE TABELA, FOQUE EM ENCONTRAR O PADRAO ESTRUTURAL DA TABELA NO ARQUIVO
+- Voce tambem deve criar uma outra coluna ncm, que deve conter o ncm dos produtos.
+
+[OBSERVACOES GERAIS DAS COLUNAS]
+
+    [OBSERVACOES CRUCIAIS]
+    - A SOMA DAS LINHAS DA COLUNA TOTAL DEVE COINCIDIR COM O VALOR TOTAL ESCRITO EM ALGUM LUGAR DA NOTA, CASO NAO COINCIDA A TABELA SERA INUTIL.
+
+    [descricao]
+    -Deve conter no maximo 120 caracteres
+    -Escreva a quantidade maxima de caracteres sem ultrapassar o limite
+    -Deve conter a marca do produto caso esteja escrito.
+    -escreva a marca assim 'MARCA: '
+    -Pode conter caracteres especiais, como acentos entre outros.
+
+    [unidade]
+    - A coluna unidade deve possuir um dos quatro valores: KG(quilograma), UND(unidade), PCT(pacote), CX(caixa).
+    - A maior preferencia e UND.
+
+    [total]
+    - A coluna total deve coincidir com a multiplicacao das colunas 'valor unitario' e 'quantidade'.
+
+    [ncm]
+    - A coluna ncm deve ser CORRETAMENTE inferida com base nos dados das outras colunas.
+
+
+[formato da resposta]
+- um texto em formato csv juntamente com o valor total da nota.
+- os dados devem ser separados por ';'.
+- Nao escreva nada mais.
