@@ -1,36 +1,21 @@
-[Conteudo]
-- Sera enviado um pdf, nesse arquivo estao escritos dados de uma nota fiscal.
+retorne a tabela no seguinte formato json:
 
-[Objetivo]
-- Seu trabalho é extrair CORRETAMENTE  as colunas descricao, unidade, quantidade, valor unitario, total.
-- NAO DEIXE FALTAR NENHUMA LINHA
-- O ARQUIVO ENVIADO ESTA ORGANIZADO EM FORMATO DE TABELA, FOQUE EM ENCONTRAR O PADRAO ESTRUTURAL DA TABELA NO ARQUIVO
-- Voce tambem deve criar uma outra coluna ncm, que deve conter o ncm dos produtos.
+{
+  "columns": ["descrição", "unidade", "quantidade", "preco_unitario", "preco_total", "ncm"],
+  "data": [
+    ["CARNE BOVINA, COXAO MOLE, 1ª QUALIDADE, SEM ADIÇÃO DE SAL, SEM OSSO - MARCA: FORTBOI", "KG", 359, 23, 8257, "0201.30.00"],
+    ["CARNE BOVINA, MOIDA, CONGELADA, EMBALAGEM EM FILME PVC OU SACO PLÁSTICO TRANSPARENTE, 500.0 GRAMAS - MARCA: FORTBOI", "KG", 96, 7.5, 720, "0202.30.10"],
+    ["CARNE BOVINA, CHARQUEADA DIANTEIRO, A VÁCUO, TRANSPARENTE, ROTULADA, 500.0 GRAMAS - MARCA: FORTBOI", "KG", 30, 17, 510, "0210.20.00"],
+    ["FRANGO, FILÉ DE PEITO, CONGELADO, SEM PELE, SEM CARTILAGEM, EMBALAGEM 1.0 QUILOGRAMA - MARCA: CANÇÃO", "KG", 300, 14, 4200, "0207.14.00"],
+    ["CARNE SUÍNA, LOMBO, SEM OSSO, SEM TEMPERO, SEM ADIÇÃO DE SAL, 1ª QUALIDADE, CONGELADA, 1.0 KG - MARCA: EXCELENCIA", "KG", 99, 19, 1881, "0203.19.00"]
+  ]
 
-[OBSERVACOES GERAIS DAS COLUNAS]
+  "total_ordem": 38.662,50,
 
-    [OBSERVACOES CRUCIAIS]
-    - A SOMA DAS LINHAS DA COLUNA TOTAL DEVE COINCIDIR COM O VALOR TOTAL ESCRITO EM ALGUM LUGAR DA NOTA, CASO NAO COINCIDA A TABELA SERA INUTIL.
+  "cnpj_promotor": 07.954.514/0483-22
+}
 
-    [descricao]
-    -Deve conter no maximo 120 caracteres
-    -Escreva a quantidade maxima de caracteres sem ultrapassar o limite
-    -Deve conter a marca do produto caso esteja escrito.
-    -escreva a marca assim 'MARCA: '
-    -Pode conter caracteres especiais, como acentos entre outros.
-
-    [unidade]
-    - A coluna unidade deve possuir um dos quatro valores: KG(quilograma), UND(unidade), PCT(pacote), CX(caixa).
-    - A maior preferencia e UND.
-
-    [total]
-    - A coluna total deve coincidir com a multiplicacao das colunas 'valor unitario' e 'quantidade'.
-
-    [ncm]
-    - A coluna ncm deve ser CORRETAMENTE inferida com base nos dados das outras colunas.
-
-
-[formato da resposta]
-- um texto em formato csv juntamente com o valor total da nota.
-- os dados devem ser separados por ';'.
-- Nao escreva nada mais.
+[IMPORTANTE]
+-adicione a coluna ncm.
+-a descrição deve ter Marca: "...", caso a marca esteja identificada na tabela.
+-a descrição deve conter no máximo 120 caracteres.

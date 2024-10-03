@@ -1,6 +1,7 @@
 import pandas as pd
 import unicodedata
 import random
+import json
 from copy import deepcopy
 
 informacoes_nota = {
@@ -167,9 +168,9 @@ class Nota:
 
             nota_final = unicodedata.normalize('NFKD', nota_final).encode('ASCII', 'ignore').decode('ASCII')
             nova_nota.write(nota_final)
-        
-if __name__ == "__main__":
-    path = str(input('Digite o nome do arquivo em notas: '))
+
+def main():
+    path = str(input('Digite o nome do arquivo em nota: '))
     df = pd.read_csv(f"notas/{path}.csv", sep = ";", names=["descricao_prod", "und_prod", "qtde_prod", "valor_und_prod", "total_prod", "ncm_prod"], header=None)
 
     nota = Nota("ok", "ok", 50)
@@ -181,4 +182,17 @@ if __name__ == "__main__":
     #nota.criar_arquivo_nota()
     nota.adicionar_produtos(df.to_dict(orient='records'))
     nota.criar_arquivo_nota()
+
+def get_json(path):
+    # Carregar o JSON a partir de um arquivo
+    with open(path, "r", encoding='utf-8') as file:
+        js = json.load(file)
+
+        print(type(js))
+        #df = pd.read_json(file)
+
+    #df.head(10)
+
+if __name__ == "__main__":
+    get_json("nota_1.json")
 
