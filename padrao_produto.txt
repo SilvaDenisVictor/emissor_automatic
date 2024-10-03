@@ -1,0 +1,9 @@
+H|{index}||
+I|{codigo}|SEM GTIN||{descricao}|{ncm}||5403|{unidade}|{quantidade}|{preco_unitario}|{total}|SEM GTIN||{unidade}|{quantidade}|{preco_unitario}|||||1|||||||
+M||
+N|
+N10d|0|400|
+Q|
+Q04|07|
+S|
+S04|07|

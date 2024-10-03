@@ -2,6 +2,7 @@ import pandas as pd
 import unicodedata
 import random
 import json
+import datetime
 from copy import deepcopy
 
 informacoes_nota = {
@@ -34,22 +35,67 @@ remetente = {
     "remetente_numero_contato": "996193827"
 }
 
-produto = {
-    "numero_prod": None,
-    "codigo_prod": None,
-    "descricao_prod": None,
-    "ncm_prod": None,
-    "und_prod": None,
-    "qtde_prod": None,
-    "valor_und_prod": None,
-    "total_prod": None
-}
+class Produto:
+    def __init__(self, index, codigo, descricao, unidade, quantidade, preco_unitario, total, ncm):
+        """
+        Inicializa um objeto Produto com os detalhes fornecidos.
+        
+        Args:
+            index (int): Índice do produto.
+            codigo (str): Código do produto.
+            descricao (str): Descrição do produto.
+            unidade (str): Unidade de medida.
+            quantidade (float): Quantidade disponível.
+            preco_unitario (float): Valor unitário do produto.
+            total (float): Valor total do produto (quantidade * valor unitário).
+            ncm (str): Código NCM do produto.
+        """
+        self.index = index
+        self.codigo = codigo
+        self.descricao = descricao
+        self.unidade = unidade
+        self.quantidade = quantidade
+        self.preco_unitario = preco_unitario
+        self.total = round(float(self.quantidade) * float(self.preco_unitario), 2)
+        self.ncm = ncm
+
+    def to_dict(self):
+        """
+        Retorna os detalhes do produto como um dicionário.
+        
+        Returns:
+            dict: Dicionário contendo os atributos do produto.
+        """
+        return {
+            "index": self.index,
+            "codigo": self.codigo,
+            "descricao": self.descricao,
+            "unidade": self.unidade,
+            "quantidade": self.quantidade,
+            "preco_unitario": self.preco_unitario,
+            "total": self.total,
+            "ncm": self.ncm
+        }
+
+    def __str__(self):
+        """
+        Retorna uma string legível para representar o produto.
+        
+        Returns:
+            str: Representação legível do produto.
+        """
+        return f"Produto {self.index} - Código: {self.codigo}, Descrição: {self.descricao}, " \
+               f"Unidade: {self.unidade}, Quantidade: {self.quantidade}, Valor Unitário: {self.preco_unitario}, " \
+               f"Total: {self.total}, NCM: {self.ncm}"
 
 class Nota:
-    def __init__(self, numero_nota, data, valor_total):
-        self.numero_nota = numero_nota
-        self.data = data
+    def __init__(self, numero_nota, valor_total, data = ''):
+        self.numero_nota = str(numero_nota)
+        self.data = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S%z-03:00")
         self.valor_total = valor_total
+        self.valor_total_calculado = 0
+            
+        print(self.data)
 
         # Detalhes do Emitente
         self.emitente_nome = None
@@ -103,34 +149,54 @@ class Nota:
         self.remetente_uf = uf
         self.remetente_numero_contato = numero_contato
 
-    def adicionar_produto(self, numero_prod, codigo_prod, descricao_prod, ncm_prod, und_prod, qtde_prod, valor_und_prod, total_prod):
-        produto = {
-            "numero_prod": numero_prod,
-            "codigo_prod": codigo_prod,
-            "descricao_prod": descricao_prod,
-            "ncm_prod": ncm_prod,
-            "und_prod": und_prod,
-            "qtde_prod": qtde_prod,
-            "valor_und_prod": valor_und_prod,
-            "total_prod": total_prod
-        }
+    def adicionar_produto(self, index, codigo, descricao, unidade, quantidade, preco_unitario, total, ncm):
+        produto = Produto(index, codigo, descricao, unidade, quantidade, preco_unitario, total, ncm)
 
         self.produtos.append(produto)
     
     def adicionar_produtos(self, lista):
         for index, produto in enumerate(lista):
-            # print(produto)
-            # print()
-            self.adicionar_produto(index, random.randint(0, 5000000), produto["descricao_prod"], produto["ncm_prod"], produto["und_prod"], produto["qtde_prod"], produto["valor_und_prod"], produto["total_prod"])
+            self.adicionar_produto(index + 1, random.randint(0, 500000000), produto["descricao"], produto["unidade"], produto["quantidade"], produto["preco_unitario"], produto["total"], produto["ncm"].replace('.', ''))
+
+        self.calcular_valor_nota()
 
     def adicionar_informacoes_adicionais(self, informacoes_adicionais):
         self.informacoes_adicionais = informacoes_adicionais
 
+    def calcular_valor_nota(self):
+        self.valor_total_calculado = 0
+
+        for produto in self.produtos:
+            self.valor_total_calculado += produto.total
+        
+        self.valor_total_calculado = str(self.valor_total_calculado)
+
+        #ADICIONANDO UM 0 CASO O A SEGUNDA CASA DECIMAL SEJA == 0
+        ultimo = '*'
+        penultimo = '*'
+
+        depois_ponto = False
+
+        for c in self.valor_total_calculado:
+            if depois_ponto and ultimo != '*':
+                penultimo = c
+
+            if depois_ponto and ultimo == '*':
+                ultimo = c
+
+            if c == '.':
+                depois_ponto = True
+        
+        if penultimo == '*':
+            self.valor_total_calculado += "0"
+        
+        self.valor_total = str(self.valor_total_calculado)
+    
     def criar_arquivo_nota(self):
-        with open("pater_nota.txt", "r") as pater_nota, open("pater_prod.txt", "r") as pater_prod, open("notas_feitas/NOTAFISCAL.txt", "w", encoding="utf-8") as nova_nota:
+        with open("padrao_nota.txt", "r") as padrao_nota, open("padrao_produto.txt", "r") as padrao_produto, open(f"notas_feitas/{self.numero_nota}.txt", "w", encoding="utf-8") as nova_nota:
             keys = list(map(lambda a: "{" + a + "}", list(self.__dict__.keys())))
 
-            nota_final = pater_nota.read()  
+            nota_final = padrao_nota.read()  
 
             for key in keys:
                 key_only = key.replace("{", "").replace("}", "")
@@ -139,19 +205,39 @@ class Nota:
 
                 if "produtos" in key:
                     produtos_txt_final = ""
-                    pater_prod_txt = pater_prod.read()
+                    padrao_produto_txt = padrao_produto.read()
 
-                    for produto in self.produtos:
+                    for produto in [produto.to_dict() for produto in self.produtos]:
                         keys_prod = list(map(lambda a: "{" + a + "}", list(produto.keys())))
-                        produtos_txt = deepcopy(pater_prod_txt)
+                        produtos_txt = deepcopy(padrao_produto_txt)
 
                         for key_prod in keys_prod:
                             key_only_prod = key_prod.replace("{", "").replace("}", "")
 
                             value = str(produto[key_only_prod])
 
-                            if key_only_prod in ("und_prod", "qtde_prod", "valor_und_prod", "total_prod"):
+                            if key_only_prod in ("unidade", "quantidade", "preco_unitario", "total"):
                                 value =  value.replace(",", ".")
+
+                            #ADICIONANDO UM 0 CASO O A SEGUNDA CASA DECIMAL SEJA == 0
+                            if key_only_prod == "total":
+                                ultimo = '*'
+                                penultimo = '*'
+
+                                depois_ponto = False
+
+                                for c in value:
+                                    if depois_ponto and ultimo != '*':
+                                        penultimo = c
+
+                                    if depois_ponto and ultimo == '*':
+                                        ultimo = c
+
+                                    if c == '.':
+                                        depois_ponto = True
+                                
+                                if penultimo == '*':
+                                    value += "0"
 
                             produtos_txt = produtos_txt.replace(key_prod, value)
                     
@@ -169,30 +255,28 @@ class Nota:
             nota_final = unicodedata.normalize('NFKD', nota_final).encode('ASCII', 'ignore').decode('ASCII')
             nova_nota.write(nota_final)
 
-def main():
-    path = str(input('Digite o nome do arquivo em nota: '))
-    df = pd.read_csv(f"notas/{path}.csv", sep = ";", names=["descricao_prod", "und_prod", "qtde_prod", "valor_und_prod", "total_prod", "ncm_prod"], header=None)
-
-    nota = Nota("ok", "ok", 50)
-    #nota.adicionar_produtos(df.to_dict(orient='records'))
-
-    nota.adicionar_emitente(*emitente.values())
-    nota.adicionar_remetente(*remetente.values())
-    nota.adicionar_informacoes_adicionais("BANCO DO BRASIL | AGÊNCIA 2906-8 | CONTA CORRENTE 29896-4|")
-    #nota.criar_arquivo_nota()
-    nota.adicionar_produtos(df.to_dict(orient='records'))
-    nota.criar_arquivo_nota()
-
 def get_json(path):
-    # Carregar o JSON a partir de um arquivo
     with open(path, "r", encoding='utf-8') as file:
         js = json.load(file)
 
-        print(type(js))
-        #df = pd.read_json(file)
+    return js
+    
+def main():
+    #RECEBENDO CAMINHO
+    numero = str(input('Digite o nome do arquivo em nota: '))
+    
+    #TRANSFORMANDO ARQUIVO EM DATAFRAME
+    js = get_json(f"notas_json/{numero}.json")
+    df = pd.DataFrame(data=js['data'], columns=js['columns'])
 
-    #df.head(10)
+    #CRIANDO E PREENCHENDO NOTA
+    nota = Nota(numero, 50)
+    nota.adicionar_emitente(*emitente.values())
+    nota.adicionar_remetente(*remetente.values())
+    nota.adicionar_informacoes_adicionais("BANCO DO BRASIL | AGÊNCIA 2906-8 | CONTA CORRENTE 29896-4|")
+    nota.adicionar_produtos(df.to_dict(orient='records'))
+    nota.criar_arquivo_nota()
+
 
 if __name__ == "__main__":
-    get_json("nota_1.json")
-
+    main()

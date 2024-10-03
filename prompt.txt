@@ -1,16 +1,41 @@
 retorne a tabela no seguinte formato json:
 
 {
-  "columns": ["descrição", "unidade", "quantidade", "preco_unitario", "preco_total", "ncm"],
+  "columns": ["descricao", "unidade", "quantidade", "preco_unitario", "total", "ncm"],
   "data": [
-    ["CARNE BOVINA, COXAO MOLE, 1ª QUALIDADE, SEM ADIÇÃO DE SAL, SEM OSSO - MARCA: FORTBOI", "KG", 359, 23, 8257, "0201.30.00"],
-    ["CARNE BOVINA, MOIDA, CONGELADA, EMBALAGEM EM FILME PVC OU SACO PLÁSTICO TRANSPARENTE, 500.0 GRAMAS - MARCA: FORTBOI", "KG", 96, 7.5, 720, "0202.30.10"],
-    ["CARNE BOVINA, CHARQUEADA DIANTEIRO, A VÁCUO, TRANSPARENTE, ROTULADA, 500.0 GRAMAS - MARCA: FORTBOI", "KG", 30, 17, 510, "0210.20.00"],
-    ["FRANGO, FILÉ DE PEITO, CONGELADO, SEM PELE, SEM CARTILAGEM, EMBALAGEM 1.0 QUILOGRAMA - MARCA: CANÇÃO", "KG", 300, 14, 4200, "0207.14.00"],
-    ["CARNE SUÍNA, LOMBO, SEM OSSO, SEM TEMPERO, SEM ADIÇÃO DE SAL, 1ª QUALIDADE, CONGELADA, 1.0 KG - MARCA: EXCELENCIA", "KG", 99, 19, 1881, "0203.19.00"]
+    ["AÇÚCAR, TIPO CRISTAL, 1.0 KG - MARCA: FORPAN", "KG", 120, 3.5, 420, "1701.99.00"],
+    ["ALHO, BRANCO, 1.0 KG - MARCA: CEASA", "KG", 65, 16, 1040, "0703.20.00"],
+    ["AMIDO, DE MILHO, 1.0 KG - MARCA: AMAFIL", "KG", 22, 8, 176, "1108.13.00"],
+    ["ARROZ LONGOFINO, 1.0 KG - MARCA: POP", "KG", 210, 5.5, 1155, "1006.30.00"],
+    ["AVEIA, FLOCOS FINOS, 500.0 GR - MARCA: NESTRÉ", "500 G", 80, 6.5, 520, "1103.19.00"],
+    ["AZEITE, OLIVA, 500.0 ML - MARCA: GALO", "500 ML", 15, 29, 435, "1515.90.00"],
+    ["BATATA, INGLESA, 1.0 KG - MARCA: CEASA", "KG", 80, 5.5, 440, "0701.90.00"],
+    ["BOLO SIMPLES, 1.0 KG - MARCA: SUPREMO", "KG", 100, 8.5, 850, "1905.90.00"],
+    ["CAFÉ, TORRADO E MOÍDO, 250.0 GR - MARCA: PURO", "250 G", 50, 6.5, 325, "0901.11.00"],
+    ["CARNE BOVINA, PATINHO, 1.0 KG - MARCA: FORTBOI", "KG", 500, 21, 10500, "0201.10.00"],
+    ["FARINHA, DE MANDIOCA, 1.0 KG - MARCA: DONADÉ", "KG", 40, 4.9, 588, "1104.10.00"],
+    ["FARINHA, PRE COZIDA, 500.0 GR - MARCA: MARATÁ", "500 G", 40, 1.5, 300, "1102.90.00"],
+    ["FARINHA LÁCTEA, 400.0 GR - MARCA: NESTRÉ", "400 G", 30, 16, 960, "1901.10.00"],
+    ["FEIJÃO, CARIOCA, 1.0 KG - MARCA: KICALDO", "KG", 50, 7.5, 375, "0713.10.00"],
+    ["FEIJÃO, DE CORDA, 1.0 KG - MARCA: KICALDO", "KG", 80, 7.5, 600, "0713.10.00"],
+    ["FEIJÃO, PRETO, 1.0 KG - MARCA: KICALDO", "KG", 80, 7.5, 600, "0713.10.00"],
+    ["FRANGO, FILE DE PEITO, 1.0 KG - MARCA: CANÇÃO", "KG", 200, 16, 3200, "0207.14.00"],
+    ["PEIXE, FILE DE PARGO, 1.0 KG - MARCA: VELERO", "KG", 100, 26, 2600, "0304.19.00"],
+    ["LEITE EM PÓ, INTEGRAL, 400.0 GR - MARCA: GOODY", "400 G", 20, 11, 220, "0402.10.00"],
+    ["LEITE, UHT, 1.0 L - MARCA: MARANGUAPE", "L", 300, 4.5, 1350, "0401.10.00"],
+    ["MACARRÃO, ESPAGUETE, 500.0 GR - MARCA: GOSTOSO", "500 G", 100, 2.5, 250, "1902.19.00"],
+    ["ESPECIARIAS, MANJERICÃO, MARCA: LENA", "UND", 30, 2.5, 75, "0910.99.00"],
+    ["LOURO, FOLHA - MARCA: LENA", "UND", 5, 2.5, 12.5, "0910.99.00"],
+    ["MARGARINA VEGETAL, 1.0 KG - MARCA: PRIMOR", "KG", 40, 9.9, 396, "1517.90.00"],
+    ["MEL, ABELHA, 20g - MARCA: FAZENDA", "20G", 20, 6.5, 130, "0405.10.00"],
+    ["ÓLEO VEGETAL, DE SOJA, 900.0 ML - MARCA: SOYA", "L", 80, 1.31, 600, "1507.10.00"],
+    ["OVO, DE GALINHA, 1 UND", "UND", 1000, 0.65, 650, "0407.00.00"],
+    ["PÃO, HAMBURGUER, pacote 500 G ", "500 G", 150, 4.5, 675, "1905.90.00"],
+    ["PÃO, DE LITE, 1.0 KG", "KG", 80, 6.5, 520, "1905.90.00"],
+    ["SAL, REFINADO, IODADO, 1.0 KG", "KG", 50, 1.5, 75, "2501.00.00"]
   ]
 
-  "total_ordem": 38.662,50,
+  "total_ordem": 30037.5,
 
   "cnpj_promotor": 07.954.514/0483-22
 }
@@ -19,3 +44,4 @@ retorne a tabela no seguinte formato json:
 -adicione a coluna ncm.
 -a descrição deve ter Marca: "...", caso a marca esteja identificada na tabela.
 -a descrição deve conter no máximo 120 caracteres.
+-o total_ordem deve ser a soma dos valores da coluna total.

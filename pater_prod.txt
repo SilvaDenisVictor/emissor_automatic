@@ -1,9 +1,0 @@
-H|{numero_prod}||
-I|{codigo_prod}|SEM GTIN||{descricao_prod}|{ncm_prod}||5403|{und_prod}|{qtde_prod}|{valor_und_prod}|{total_prod}|SEM GTIN||{und_prod}|{qtde_prod}|{valor_und_prod}|{total_prod}|||||1|||||||
-M||
-N|
-N10d|0|400|
-Q|
-Q04|07|
-S|
-S04|07|

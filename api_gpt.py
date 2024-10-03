@@ -12,7 +12,7 @@ def get_pdf_txt(path):
         language='pt',
     )
 
-    documents =  parser.load_data(path)
+    documents =  parser.load_data(f"notas/{path}.pdf")
 
     for document in documents:
         full_pdf_txt += document.text
@@ -34,7 +34,7 @@ def get_completion(content, prompt_path="prompt.txt"):
 
     return completion
 
-def get_csv(path):
+def get_json(path):
     completion = get_completion(get_pdf_txt(path))
 
     return completion
@@ -42,12 +42,11 @@ def get_csv(path):
 if __name__ == "__main__":
     _ = load_dotenv(find_dotenv())
 
-    path = "nota_2.pdf"
-    completion =  get_csv(path)
+    nome = input("Nome da nota:")
 
-    with open("nota_1.json", "w", encoding='utf-8') as file:
+    with open(f"notas_json/{nome}.json", "w", encoding='utf-8') as file:
+        completion = get_json(nome)
         txt = completion.choices[0].message.content
-        #file.write(completion.choices[0].message.content)
 
         inicio = -1
         fim = -1
