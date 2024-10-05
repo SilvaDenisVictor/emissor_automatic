@@ -3,7 +3,7 @@ from dotenv import load_dotenv, find_dotenv
 from llama_parse import LlamaParse
 import os
 
-def get_pdf_txt(path):
+def get_mark_down(path):
     full_pdf_txt = ""
 
     parser = LlamaParse(
@@ -35,17 +35,15 @@ def get_completion(content, prompt_path="prompt.txt"):
     return completion
 
 def get_json(path):
-    completion = get_completion(get_pdf_txt(path))
+    completion = get_completion(get_mark_down(path))
 
     return completion
 
-if __name__ == "__main__":
+def transform_json(numero):
     _ = load_dotenv(find_dotenv())
 
-    nome = input("Nome da nota:")
-
-    with open(f"notas_json/{nome}.json", "w", encoding='utf-8') as file:
-        completion = get_json(nome)
+    with open(f"notas_json/{numero}.json", "w", encoding='utf-8') as file:
+        completion = get_json(numero)
         txt = completion.choices[0].message.content
 
         inicio = -1
@@ -61,4 +59,8 @@ if __name__ == "__main__":
         json_txt = txt[inicio: fim + 1]
 
         file.write(json_txt)
+
+# if __name__ == "__main__":
+#    pass
+    
     

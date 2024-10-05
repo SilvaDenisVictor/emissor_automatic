@@ -1,3 +1,11 @@
+EXTRAIA OS SEGUINTES DADOS DA TABELA ["descricao", "unidade", "quantidade", "preco_unitario", "total", "ncm"]
+
+[IMPORTANTE]
+-adicione a coluna ncm.
+-a descrição deve ter Marca: "...", caso a marca esteja identificada na tabela.
+-a descrição deve conter no máximo 120 caracteres.
+-o total_ordem deve ser a soma dos valores da coluna total.
+
 retorne a tabela no seguinte formato json:
 
 {
@@ -40,8 +48,3 @@ retorne a tabela no seguinte formato json:
   "cnpj_promotor": 07.954.514/0483-22
 }
 
-[IMPORTANTE]
--adicione a coluna ncm.
--a descrição deve ter Marca: "...", caso a marca esteja identificada na tabela.
--a descrição deve conter no máximo 120 caracteres.
--o total_ordem deve ser a soma dos valores da coluna total.

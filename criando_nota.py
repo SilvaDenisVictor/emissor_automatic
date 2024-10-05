@@ -5,35 +5,91 @@ import json
 import datetime
 from copy import deepcopy
 
-informacoes_nota = {
-    "numero_nota": "5",
-    "data": "2024-07-31T16:00:00-03:00", #
-}
+class Emitente:
+    def __init__(self, nome, nome_fantasia, inscricao_estadual, cnpj, logradouro, numero, complemento, bairro, municipio, uf, cep, fone):
+        self.nome = nome
+        self.nome_fantasia = nome_fantasia
+        self.inscricao_estadual = inscricao_estadual
+        self.cnpj = cnpj
+        self.logradouro = logradouro
+        self.numero = numero
+        self.complemento = complemento
+        self.bairro = bairro
+        self.municipio = municipio
+        self.uf = uf
+        self.cep = cep
+        self.fone = fone
 
-emitente = {
-    "emitente_nome": "J F MENDES COMERCIO E SERVICOS",
-    "emitente_nome_fantasia": "DIGITAL PAPELARIA E INFORMATICA",
-    "emitente_inscricao_estadual": "066794145", 
-    "emitente_cnpj": "46333345000168",
-    "emitente_logradouro": "R COLOMBO",
-    "emitente_numero": "310",
-    "emitente_bairro": "PARQUE SANTA ROSA",
-    "emitente_municipio": "Fortaleza",
-    "emitente_uf": "CE",
-    "emitente_cep": "60060520",
-    "emitente_numero_contato": "8533333333",
-}
+    def to_dict(self):
+        return {
+            "emitente_nome": self.nome,
+            "emitente_nome_fantasia": self.nome_fantasia,
+            "emitente_inscricao_estadual": self.inscricao_estadual,
+            "emitente_cnpj": self.cnpj,
+            "emitente_logradouro": self.logradouro,
+            "emitente_numero": self.numero,
+            "emitente_complemento": self.complemento,
+            "emitente_bairro": self.bairro,
+            "emitente_municipio": self.municipio,
+            "emitente_uf": self.uf,
+            "emitente_cep": self.cep,
+            "emitente_fone": self.fone
+        }
 
-remetente = {
-    "remetente_nome": "Instituto Cultural Iracema",
-    "remetente_cnpj": "13637888000110",
-    "remetente_logradouro": "Rua dos Pacajus",
-    "remetente_numero": "33",
-    "remetente_bairro": "Praia de Iracema",
-    "remetente_municipio": "Fortaleza",
-    "remetente_uf": "CE",
-    "remetente_numero_contato": "996193827"
-}
+class Remetente:
+    def __init__(self, nome, cnpj, logradouro, numero, complemento, bairro, municipio, uf, cep, fone):
+        self.nome = nome
+        self.cnpj = cnpj
+        self.logradouro = logradouro
+        self.numero = numero
+        self.complemento = complemento
+        self.bairro = bairro
+        self.municipio = municipio
+        self.uf = uf
+        self.cep = cep
+        self.fone = fone
+
+    def to_dict(self):
+        return {
+            "remetente_nome": self.nome,
+            "remetente_cnpj": self.cnpj,
+            "remetente_logradouro": self.logradouro,
+            "remetente_numero": self.numero,
+            "remetente_complemento": self.complemento,
+            "remetente_bairro": self.bairro,
+            "remetente_municipio": self.municipio,
+            "remetente_uf": self.uf,
+            "remetente_cep": self.cep,
+            "remetente_fone": self.fone
+        }
+
+# Exemplo de como criar objetos e obter os dicionários:
+# emitente = Emitente(
+#     nome="J F MENDES COMERCIO E SERVICOS",
+#     nome_fantasia="DIGITAL PAPELARIA E INFORMATICA",
+#     inscricao_estadual="066794145",
+#     cnpj="46333345000168",
+#     logradouro="R COLOMBO",
+#     numero="310",
+#     bairro="PARQUE SANTA ROSA",
+#     municipio="Fortaleza",
+#     uf="CE",
+#     cep="60060520",
+#     fone="8533333333"
+# )
+
+# remetente = Remetente(
+#     nome="Instituto Cultural Iracema",
+#     cnpj="13637888000110",
+#     logradouro="Rua dos Pacajus",
+#     numero="33",
+#     bairro="Praia de Iracema",
+#     municipio="Fortaleza",
+#     uf="CE",
+#     fone="996193827"
+# )
+
+informacoes_adicionais = "BANCO DO BRASIL | AGÊNCIA 2906-8 | CONTA CORRENTE 29896-4|"
 
 class Produto:
     def __init__(self, index, codigo, descricao, unidade, quantidade, preco_unitario, total, ncm):
@@ -94,8 +150,6 @@ class Nota:
         self.data = datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S%z-03:00")
         self.valor_total = valor_total
         self.valor_total_calculado = 0
-            
-        print(self.data)
 
         # Detalhes do Emitente
         self.emitente_nome = None
@@ -104,21 +158,24 @@ class Nota:
         self.emitente_cnpj = None
         self.emitente_logradouro = None
         self.emitente_numero = None
+        self.emitente_complemento = None
         self.emitente_bairro = None
         self.emitente_municipio = None
         self.emitente_uf = None
         self.emitente_cep = None
-        self.emitente_numero_contato = None
+        self.emitente_fone = None
 
         # Detalhes do Remetente
         self.remetente_nome = None
         self.remetente_cnpj = None
         self.remetente_logradouro = None
         self.remetente_numero = None
+        self.remetente_complemento = None
         self.remetente_bairro = None
         self.remetente_municipio = None
         self.remetente_uf = None
-        self.remetente_numero_contato = None
+        self.remetente_cep = None
+        self.remetente_fone = None
 
         # Detalhes dos Produtos
         self.produtos = []
@@ -126,28 +183,31 @@ class Nota:
         # Detalhes Adicionais
         self.informacoes_adicionais = None
 
-    def adicionar_emitente(self, nome, nome_fantasia, inscricao_estadual, cnpj, logradouro, numero, bairro, municipio, uf, cep, numero_contato):
+    def adicionar_emitente(self, nome, nome_fantasia, inscricao_estadual, cnpj, logradouro, numero, complemento, bairro, municipio, uf, cep, fone):
         self.emitente_nome = nome
         self.emitente_nome_fantasia = nome_fantasia
         self.emitente_inscricao_estadual = inscricao_estadual
         self.emitente_cnpj = cnpj
         self.emitente_logradouro = logradouro
         self.emitente_numero = numero
+        self.emitente_complemento = complemento
         self.emitente_bairro = bairro
         self.emitente_municipio = municipio
         self.emitente_uf = uf
         self.emitente_cep = cep
-        self.emitente_numero_contato = numero_contato
+        self.emitente_fone = fone
 
-    def adicionar_remetente(self, nome, cnpj, logradouro, numero, bairro, municipio, uf, numero_contato):
+    def adicionar_remetente(self, nome, cnpj, logradouro, numero, complemento, bairro, municipio, uf, cep, fone):
         self.remetente_nome = nome
         self.remetente_cnpj = cnpj
         self.remetente_logradouro = logradouro
         self.remetente_numero = numero
+        self.remetente_complemento = complemento
         self.remetente_bairro = bairro
         self.remetente_municipio = municipio
         self.remetente_uf = uf
-        self.remetente_numero_contato = numero_contato
+        self.remetente_cep = cep
+        self.remetente_fone = fone
 
     def adicionar_produto(self, index, codigo, descricao, unidade, quantidade, preco_unitario, total, ncm):
         produto = Produto(index, codigo, descricao, unidade, quantidade, preco_unitario, total, ncm)
@@ -169,7 +229,7 @@ class Nota:
         for produto in self.produtos:
             self.valor_total_calculado += produto.total
         
-        self.valor_total_calculado = str(self.valor_total_calculado)
+        self.valor_total_calculado = str(round(self.valor_total_calculado, 2))
 
         #ADICIONANDO UM 0 CASO O A SEGUNDA CASA DECIMAL SEJA == 0
         ultimo = '*'
@@ -261,22 +321,20 @@ def get_json(path):
 
     return js
     
-def main():
-    #RECEBENDO CAMINHO
-    numero = str(input('Digite o nome do arquivo em nota: '))
-    
+def build_note(numero, valor_total, emitente, remetente, hora = ''):
     #TRANSFORMANDO ARQUIVO EM DATAFRAME
     js = get_json(f"notas_json/{numero}.json")
     df = pd.DataFrame(data=js['data'], columns=js['columns'])
 
     #CRIANDO E PREENCHENDO NOTA
-    nota = Nota(numero, 50)
-    nota.adicionar_emitente(*emitente.values())
-    nota.adicionar_remetente(*remetente.values())
-    nota.adicionar_informacoes_adicionais("BANCO DO BRASIL | AGÊNCIA 2906-8 | CONTA CORRENTE 29896-4|")
+    nota = Nota(numero, valor_total, data=hora)
+    nota.adicionar_emitente(*emitente.to_dict().values())
+    nota.adicionar_remetente(*remetente.to_dict().values())
+    nota.adicionar_informacoes_adicionais(informacoes_adicionais)
+    
     nota.adicionar_produtos(df.to_dict(orient='records'))
     nota.criar_arquivo_nota()
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     pass
