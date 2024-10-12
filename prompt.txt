@@ -3,10 +3,10 @@ EXTRAIA OS SEGUINTES DADOS DA TABELA ["descricao", "unidade", "quantidade", "pre
 [IMPORTANTE]
 -adicione a coluna ncm.
 -a descrição deve ter Marca: "...", caso a marca esteja identificada na tabela.
--a descrição deve conter no máximo 120 caracteres.
+-escreva o máximo possível da descrição sem passar 120 caracteres.
 -o total_ordem deve ser a soma dos valores da coluna total.
 
-retorne a tabela no seguinte formato json:
+[FORMATO DO JSON]:
 
 {
   "columns": ["descricao", "unidade", "quantidade", "preco_unitario", "total", "ncm"],

@@ -2,7 +2,7 @@ NOTAFISCAL|1
 
 A|4.00||
 
-B|23|00000090|VENDAS DENTRO DO ESTADO|55|1|{numero_nota}|{data}||1|1|2304400|1|1|0|1|1|1|0||3|4.01_sebrae_b045|||
+B|23|00000090|VENDAS DENTRO DO ESTADO|55|1|{numero_nota}|{data}||1|1|2304400|1|1||1|1|1|0||3|4.01_sebrae_b045|||
 
 C|{emitente_nome}|{emitente_nome_fantasia}|{emitente_inscricao_estadual}||||1|
 C02|{emitente_cnpj}|

@@ -57,7 +57,7 @@ def get_remetente_cnpj(cnpj):
 
     #CRIANDO REMETENTE
     remetente_dict = {
-        "nome": get_name_in(js["nome"]),
+        "nome": get_name_in(js["fantasia"]),
         "cnpj": re.sub('[^0-9]', '', js["cnpj"]),
         "logradouro": js["logradouro"],
         "numero": js["numero"],
@@ -90,11 +90,11 @@ def main(numero_nota, cnpj_emitente, inscricao_estadual_emitente, valor_total):
 
 if __name__ == "__main__":
     #PEGAR NUMERO DA NOTA E CNPJ DO EMITENTE
-    # numero_nota = input("DIGITE NUMERO DA NOTA: ")
-    # cnpj_emitente = re.sub('[^0-9]', '', input("DIGITE DIGITE O CNPJ DO EMITENTE: "))
-    # inscricao_estadual_emitente = input("DIGITE DIGITE A INSCRIÇÃO ESTADUAL DO EMITENTE: ")
-    # valor_total = input("DIGITE O VALOR TOTAL: ")
+    numero_nota = input("DIGITE NUMERO DA NOTA: ")
+    cnpj_emitente = re.sub('[^0-9]', '', input("DIGITE DIGITE O CNPJ DO EMITENTE: "))
+    inscricao_estadual_emitente = input("DIGITE DIGITE A INSCRIÇÃO ESTADUAL DO EMITENTE: ")
+    valor_total = input("DIGITE O VALOR TOTAL: ")
 
-    # main(numero_nota, cnpj_emitente, inscricao_estadual_emitente, valor_total)
-    main(700, "46333345000168", "070633975",  2801.39)
+    main(numero_nota, cnpj_emitente, inscricao_estadual_emitente, valor_total)
+    #main(700, "46333345000168", "070633975",  2801.39)
     
