@@ -19,7 +19,7 @@ def get_mark_down(path):
     
     return full_pdf_txt
 
-def get_completion(content, prompt_path="prompt.txt"):
+def get_completion(content, prompt_path="utils/prompt.txt"):
     client = OpenAI(
         api_key = os.environ.get("OPENAI_API_KEY")
     )
