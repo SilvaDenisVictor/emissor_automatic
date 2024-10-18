@@ -63,34 +63,6 @@ class Remetente:
             "remetente_fone": self.fone
         }
 
-# Exemplo de como criar objetos e obter os dicionários:
-# emitente = Emitente(
-#     nome="J F MENDES COMERCIO E SERVICOS",
-#     nome_fantasia="DIGITAL PAPELARIA E INFORMATICA",
-#     inscricao_estadual="066794145",
-#     cnpj="46333345000168",
-#     logradouro="R COLOMBO",
-#     numero="310",
-#     bairro="PARQUE SANTA ROSA",
-#     municipio="Fortaleza",
-#     uf="CE",
-#     cep="60060520",
-#     fone="8533333333"
-# )
-
-# remetente = Remetente(
-#     nome="Instituto Cultural Iracema",
-#     cnpj="13637888000110",
-#     logradouro="Rua dos Pacajus",
-#     numero="33",
-#     bairro="Praia de Iracema",
-#     municipio="Fortaleza",
-#     uf="CE",
-#     fone="996193827"
-# )
-
-informacoes_adicionais = "BANCO DO BRASIL | AGÊNCIA 2906-8 | CONTA CORRENTE 29896-4|"
-
 class Produto:
     def __init__(self, index, codigo, descricao, unidade, quantidade, preco_unitario, total, ncm):
         """
@@ -152,36 +124,36 @@ class Nota:
         self.valor_total_calculado = 0
 
         # Detalhes do Emitente
-        self.emitente_nome = None
-        self.emitente_nome_fantasia = None
-        self.emitente_inscricao_estadual = None
-        self.emitente_cnpj = None
-        self.emitente_logradouro = None
-        self.emitente_numero = None
-        self.emitente_complemento = None
-        self.emitente_bairro = None
-        self.emitente_municipio = None
-        self.emitente_uf = None
-        self.emitente_cep = None
-        self.emitente_fone = None
+        self.emitente_nome = ""
+        self.emitente_nome_fantasia = ""
+        self.emitente_inscricao_estadual = ""
+        self.emitente_cnpj = ""
+        self.emitente_logradouro = ""
+        self.emitente_numero = ""
+        self.emitente_complemento = ""
+        self.emitente_bairro = ""
+        self.emitente_municipio = ""
+        self.emitente_uf = ""
+        self.emitente_cep = ""
+        self.emitente_fone = ""
 
         # Detalhes do Remetente
-        self.remetente_nome = None
-        self.remetente_cnpj = None
-        self.remetente_logradouro = None
-        self.remetente_numero = None
-        self.remetente_complemento = None
-        self.remetente_bairro = None
-        self.remetente_municipio = None
-        self.remetente_uf = None
-        self.remetente_cep = None
-        self.remetente_fone = None
+        self.remetente_nome = ""
+        self.remetente_cnpj = ""
+        self.remetente_logradouro = ""
+        self.remetente_numero = ""
+        self.remetente_complemento = ""
+        self.remetente_bairro = ""
+        self.remetente_municipio = ""
+        self.remetente_uf = ""
+        self.remetente_cep = ""
+        self.remetente_fone = ""
 
         # Detalhes dos Produtos
         self.produtos = []
 
         # Detalhes Adicionais
-        self.informacoes_adicionais = None
+        self.informacoes_adicionais = ""
 
     def adicionar_emitente(self, nome, nome_fantasia, inscricao_estadual, cnpj, logradouro, numero, complemento, bairro, municipio, uf, cep, fone):
         self.emitente_nome = nome
@@ -249,11 +221,16 @@ class Nota:
         
         if penultimo == '*':
             self.valor_total_calculado += "0"
+
+        if float(self.valor_total_calculado) != float(self.valor_total):
+            self.diferent_values()
+        else:
+            print("TUDO OK")
         
         self.valor_total = str(self.valor_total_calculado)
     
     def criar_arquivo_nota(self):
-        with open("padrao_nota.txt", "r") as padrao_nota, open("padrao_produto.txt", "r") as padrao_produto, open(f"notas_feitas/{self.numero_nota}.txt", "w", encoding="utf-8") as nova_nota:
+        with open("utils/padrao_nota.txt", "r") as padrao_nota, open("utils/padrao_produto.txt", "r") as padrao_produto, open(f"notas_feitas/{self.numero_nota}.txt", "w", encoding="utf-8") as nova_nota:
             keys = list(map(lambda a: "{" + a + "}", list(self.__dict__.keys())))
 
             nota_final = padrao_nota.read()  
@@ -308,12 +285,17 @@ class Nota:
                     if "valor_total" == key_only:
                         value = str(self.__dict__[key_only]).replace(",", ".")
                     else:
-                        value = self.__dict__[key_only] 
+                        value = str(self.__dict__[key_only] )
                 
                 nota_final = nota_final.replace(key, value)
 
             nota_final = unicodedata.normalize('NFKD', nota_final).encode('ASCII', 'ignore').decode('ASCII')
             nova_nota.write(nota_final)
+
+    def diferent_values():
+        print("Valores diferentes entre o total calculado e o total informado.")
+        #VALOR INFORMADO INCORRETO
+        #VALOR LIDO ERRADO PELO PROGRAMA
 
 def get_json(path):
     with open(path, "r", encoding='utf-8') as file:
@@ -321,7 +303,7 @@ def get_json(path):
 
     return js
     
-def build_note(numero, valor_total, emitente, remetente, hora = ''):
+def build_note(numero, valor_total, emitente, remetente, informacoes_adicionais, hora = ''):
     #TRANSFORMANDO ARQUIVO EM DATAFRAME
     js = get_json(f"notas_json/{numero}.json")
     df = pd.DataFrame(data=js['data'], columns=js['columns'])
