@@ -1,6 +1,6 @@
+notas/
 .env
-notas
-notas_feitas
-notas_json
-build
-__pycache__
+notas_feitas/
+notas_json/
+build/
+__pycache__/
