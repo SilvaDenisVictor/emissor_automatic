@@ -65,19 +65,6 @@ class Remetente:
 
 class Produto:
     def __init__(self, index, codigo, descricao, unidade, quantidade, preco_unitario, total, ncm):
-        """
-        Inicializa um objeto Produto com os detalhes fornecidos.
-        
-        Args:
-            index (int): Índice do produto.
-            codigo (str): Código do produto.
-            descricao (str): Descrição do produto.
-            unidade (str): Unidade de medida.
-            quantidade (float): Quantidade disponível.
-            preco_unitario (float): Valor unitário do produto.
-            total (float): Valor total do produto (quantidade * valor unitário).
-            ncm (str): Código NCM do produto.
-        """
         self.index = index
         self.codigo = codigo
         self.descricao = descricao
@@ -88,12 +75,6 @@ class Produto:
         self.ncm = ncm
 
     def to_dict(self):
-        """
-        Retorna os detalhes do produto como um dicionário.
-        
-        Returns:
-            dict: Dicionário contendo os atributos do produto.
-        """
         return {
             "index": self.index,
             "codigo": self.codigo,
