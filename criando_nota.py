@@ -87,12 +87,6 @@ class Produto:
         }
 
     def __str__(self):
-        """
-        Retorna uma string legível para representar o produto.
-        
-        Returns:
-            str: Representação legível do produto.
-        """
         return f"Produto {self.index} - Código: {self.codigo}, Descrição: {self.descricao}, " \
                f"Unidade: {self.unidade}, Quantidade: {self.quantidade}, Valor Unitário: {self.preco_unitario}, " \
                f"Total: {self.total}, NCM: {self.ncm}"
