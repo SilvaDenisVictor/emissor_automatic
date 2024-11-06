@@ -1,9 +1,9 @@
 import pandas as pd
-import unicodedata
 import random
 import json
 import datetime
 from copy import deepcopy
+from exp import ValorDiferente
 
 class Emitente:
     def __init__(self, nome, nome_fantasia, inscricao_estadual, cnpj, logradouro, numero, complemento, bairro, municipio, uf, cep, fone):
@@ -193,7 +193,7 @@ class Nota:
         self.calcular_valor_nota()
 
     def adicionar_informacoes_adicionais(self, informacoes_adicionais):
-        self.informacoes_adicionais = informacoes_adicionais
+        self.informacoes_adicionais = informacoes_adicionais.replace("|", "-")
 
     def calcular_valor_nota(self):
         self.valor_total_calculado = 0
@@ -223,6 +223,7 @@ class Nota:
             self.valor_total_calculado += "0"
 
         if float(self.valor_total_calculado) != float(self.valor_total):
+            # print(float(self.valor_total_calculado), "    ", float(self.valor_total))
             self.diferent_values()
         else:
             print("TUDO OK")
@@ -230,7 +231,7 @@ class Nota:
         self.valor_total = str(self.valor_total_calculado)
     
     def criar_arquivo_nota(self):
-        with open("utils/padrao_nota.txt", "r") as padrao_nota, open("utils/padrao_produto.txt", "r") as padrao_produto, open(f"notas_feitas/{self.numero_nota}.txt", "w", encoding="utf-8") as nova_nota:
+        with open("utils/padrao_nota.txt", "r", encoding="utf-8") as padrao_nota, open("utils/padrao_produto.txt", "r", encoding="utf-8") as padrao_produto, open(f"notas_feitas/{self.numero_nota}.txt", "w", encoding="utf-8") as nova_nota:
             keys = list(map(lambda a: "{" + a + "}", list(self.__dict__.keys())))
 
             nota_final = padrao_nota.read()  
@@ -283,19 +284,22 @@ class Nota:
                     value = produtos_txt_final
                 else:
                     if "valor_total" == key_only:
-                        value = str(self.__dict__[key_only]).replace(",", ".")
+                        value = str(self.__dict__[key_only]).replace(",", ".")      
                     else:
                         value = str(self.__dict__[key_only] )
+                    
+                    if value.lower() == "none":
+                        value = ""
+                    
+                    value = value.strip()
                 
                 nota_final = nota_final.replace(key, value)
 
-            nota_final = unicodedata.normalize('NFKD', nota_final).encode('ASCII', 'ignore').decode('ASCII')
+            #nota_final = unicodedata.normalize('NFKD', nota_final).encode('ASCII', 'ignore').decode('ASCII')
             nova_nota.write(nota_final)
 
-    def diferent_values():
-        print("Valores diferentes entre o total calculado e o total informado.")
-        #VALOR INFORMADO INCORRETO
-        #VALOR LIDO ERRADO PELO PROGRAMA
+    def diferent_values(self):
+        raise ValorDiferente(f"Valores diferentes!\nValor Calculado:{float(self.valor_total_calculado)}\nValor Informado: {float(self.valor_total)}")
 
 def get_json(path):
     with open(path, "r", encoding='utf-8') as file:
@@ -316,7 +320,3 @@ def build_note(numero, valor_total, emitente, remetente, informacoes_adicionais,
     
     nota.adicionar_produtos(df.to_dict(orient='records'))
     nota.criar_arquivo_nota()
-
-
-# if __name__ == "__main__":
-#     pass
