@@ -1,10 +1,15 @@
-EXTRAIA OS SEGUINTES DADOS DA TABELA ["descricao", "unidade", "quantidade", "preco_unitario", "total", "ncm"]
+EXTRAIA OS DADOS A SEGUIR DA TABELA:
+Campos: descricao, unidade, quantidade, preco_unitario, total, ncm
 
-[IMPORTANTE]
--CASO O A NOTA ENVIADO JÁ TENHA UMA COLUNA EXCLUSIVA PARA AS UNIDADES, ENTAO coluna_unidade_bool = True, SENAO coluna_unidade_bool = False
--COLOQUE O NCM ATUALIZADOS
--ESCREVA A DESCRIÇÃO EXATAMENTE IGUAL, COM OS CARACTERES ESPECIAIS E O CASE DAS LETRAS CORRESPONDENTES 
--a descrição deve ter Marca: "..." ao final, caso a marca esteja identificada na tabela.
--Adicione o total.
--O cnpj do promotor(O CPF INFORMADO DEVE SER DIFERENTE DE 46.333.345/0001-68).
--CASO TENHA UMA COLUNA UNIDADE NA NOTA UTILIZE A UNIDADE ESPECIFICADA
+INSTRUÇÕES IMPORTANTES:
+Verificação de coluna de unidade: Se a nota contém uma coluna dedicada a unidades, defina coluna_unidade_bool como True; caso contrário, defina como False.
+
+NCM atualizado: Garanta que o campo ncm seja preenchido com os códigos mais recentes.
+
+Preservação de descrição: Mantenha a descricao exatamente como aparece na tabela, incluindo caracteres especiais e o formato de maiúsculas e minúsculas. Se a marca estiver presente, adicione-a no final da descrição no formato: Marca: "<marca>".
+
+Cálculo total: Inclua o campo total, conforme especificado na tabela.
+
+CNPJ do promotor: Extraia o CNPJ.
+
+Unidade de medida: Caso haja uma coluna de unidade na nota, utilize a unidade especificada.
